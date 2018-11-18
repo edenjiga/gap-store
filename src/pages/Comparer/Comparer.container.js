@@ -1,23 +1,25 @@
 import { connect } from 'react-redux';
-import Main from './Main';
+import Comparer from './Comparer';
+import { findIndex } from 'lodash';
 
 import carsSelector from '../../store/reducers/cars/selectors';
-import headerSelector from '../../store/reducers/header/selectors';
 import selectedCarsSelector from '../../store/reducers/selectedCars/selectors';
-import { changeSelectedCars } from '../../store/actions/selectedCars';
 
 const mapStateToProps = state => {
   const cars = carsSelector(state).getAll();
-  const searchText = headerSelector(state).getSearchText();
   const selectedCars = selectedCarsSelector(state).getState();
+  console.log(cars);
 
-  return {
-    cars,
-    searchText,
-    selectedCars
-  };
+  const items = selectedCars.carsId.map(id => {
+    const index = findIndex(cars, ['id', id]);
+    return cars[index];
+  });
+
+  console.log(items);
+
+  return { items };
 };
 export default connect(
   mapStateToProps,
-  { changeSelectedCars }
-)(Main);
+  {}
+)(Comparer);

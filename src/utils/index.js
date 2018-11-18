@@ -1,3 +1,5 @@
+import { includes } from 'lodash';
+
 export const createActionTypes = (key, baseAction) => {
   return {
     [`${baseAction}_REQUEST`]: `${key}/${baseAction}_REQUEST`,
