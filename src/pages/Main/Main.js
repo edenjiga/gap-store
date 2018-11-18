@@ -1,14 +1,20 @@
 import React, { Component, Fragment } from 'react';
 
-import { sortBy, includes, remove } from 'lodash';
+import { sortBy, includes, remove, findIndex } from 'lodash';
 import { Container, Row } from 'reactstrap';
-import { CarCard, ComparerButton } from 'components';
+import { CarCard, ComparerButton, Modal } from 'components';
 
 export default class extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      modal: false,
+      carSelected: {}
+    };
     this.handleCheckedCar = this.handleCheckedCar.bind(this);
     this.handleUncheckedCar = this.handleUncheckedCar.bind(this);
+    this.onClickCard = this.onClickCard.bind(this);
+    this.onCloseModal = this.onCloseModal.bind(this);
   }
 
   handleCheckedCar(id) {
@@ -26,14 +32,34 @@ export default class extends Component {
     changeSelectedCars(remove(carsId, n => n !== id));
   }
 
+  onClickCard(id) {
+    const { cars } = this.props;
+    this.setState({
+      modal: !this.state.modal,
+      carSelected: cars[findIndex(cars, ['id', id])]
+    });
+  }
+
+  onCloseModal() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
   render() {
     const { cars = [], searchText, selectedCars } = this.props;
+    const { modal, carSelected } = this.state;
 
     const items = cars.filter(item =>
       includes(item.brand.toUpperCase(), searchText.toUpperCase())
     );
     return (
       <Fragment>
+        <Modal
+          isOpen={modal}
+          onCloseModal={this.onCloseModal}
+          car={carSelected}
+        />
         <Container>
           <Row>
             {sortBy(items, ['brand']).map((car, index) => (
@@ -43,6 +69,7 @@ export default class extends Component {
                 selected={selectedCars.selected}
                 handleCheckedCar={this.handleCheckedCar}
                 handleUncheckedCar={this.handleUncheckedCar}
+                onClickCard={this.onClickCard}
               />
             ))}
           </Row>

@@ -2,9 +2,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import ReactDOM from 'react-dom';
-// import 'materialize-css/dist/css/materialize.min.css';
-
 import { Provider } from 'react-redux';
+
 import App from './App';
 import { fetchCars } from './store/actions/cars';
 import { store } from './store/configureStore';

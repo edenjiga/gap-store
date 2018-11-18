@@ -1,5 +1,13 @@
 import React from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import {
+  Button,
+  Card,
+  CardBody,
+  CardText,
+  Modal,
+  ModalBody,
+  CardImg
+} from 'reactstrap';
 
 class ModalExample extends React.Component {
   constructor(props) {
@@ -18,30 +26,31 @@ class ModalExample extends React.Component {
   }
 
   render() {
+    const { isOpen, onCloseModal, car } = this.props;
     return (
-      <Modal
-        isOpen={this.state.modal}
-        toggle={this.toggle}
-        className={this.props.className}
-      >
-        <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+      <Modal isOpen={isOpen} className={this.props.className}>
         <ModalBody>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
+          <Card>
+            <CardImg
+              top
+              width="100%"
+              height="180px"
+              src={car.picture}
+              alt="Card image cap"
+            />
+            <CardBody>
+              <CardText>Year: {car.year}</CardText>
+              <CardText>Brand: {car.brand}</CardText>
+              <CardText>Price: {car.price}</CardText>
+              <CardText>Hourse Power: {car.hp}</CardText>
+              <CardText>Gears: {car.gears}</CardText>
+            </CardBody>
+
+            <Button color="secondary" onClick={onCloseModal}>
+              Close
+            </Button>
+          </Card>
         </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={this.toggle}>
-            Do Something
-          </Button>{' '}
-          <Button color="secondary" onClick={this.toggle}>
-            Cancel
-          </Button>
-        </ModalFooter>
       </Modal>
     );
   }

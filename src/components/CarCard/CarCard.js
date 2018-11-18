@@ -3,7 +3,7 @@ import { Col, Input } from 'reactstrap';
 import styled from 'styled-components';
 import { Card, CardImg, CardText, CardBody, Label } from 'reactstrap';
 
-const ColStyled = styled(Col)`
+export const ColStyled = styled(Col)`
   margin-top: 20px;
 `;
 
@@ -16,7 +16,7 @@ export default class extends Component {
     this.onChange = this.onChange.bind(this);
   }
 
-  onChange(event) {
+  onChange() {
     const { selected, car, handleUncheckedCar, handleCheckedCar } = this.props;
     if (this.state.checked) {
       this.setState({ checked: !this.state.checked });
@@ -30,11 +30,11 @@ export default class extends Component {
   }
 
   render() {
-    const { car } = this.props;
+    const { car, onClickCard } = this.props;
     return (
       <ColStyled md={4} sm={12}>
         <Card>
-          <div onClick={() => console.log('aa')}>
+          <div onClick={() => onClickCard(car.id)}>
             <CardImg
               top
               width="100%"
@@ -43,10 +43,10 @@ export default class extends Component {
               alt="Card image cap"
             />
             <CardBody>
-              <CardText>Model: {car.model}</CardText>
-              <CardText>Year: {car.year}</CardText>
-              <CardText>Brand: {car.brand}</CardText>
-              <CardText>Price: {car.price}</CardText>
+              <CardText>{`Model: ${car.model}`}</CardText>
+              <CardText>{`Year: ${car.year}`}</CardText>
+              <CardText>{`Brand: ${car.brand}`}</CardText>
+              <CardText>{`Price: ${car.price}`}</CardText>
             </CardBody>
           </div>
           <Label check>

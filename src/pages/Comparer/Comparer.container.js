@@ -8,14 +8,11 @@ import selectedCarsSelector from '../../store/reducers/selectedCars/selectors';
 const mapStateToProps = state => {
   const cars = carsSelector(state).getAll();
   const selectedCars = selectedCarsSelector(state).getState();
-  console.log(cars);
 
   const items = selectedCars.carsId.map(id => {
     const index = findIndex(cars, ['id', id]);
     return cars[index];
   });
-
-  console.log(items);
 
   return { items };
 };
